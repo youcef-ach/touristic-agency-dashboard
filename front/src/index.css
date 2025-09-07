@@ -1,0 +1,45 @@
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-layouts/styles/material.css";
+
+body {
+  height: 100vh;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#root {
+  height: 100%;
+}
+
+.fullHW {
+  height: 100%;
+  width: 100%;
+}
+
+.fullH {
+  height: 100%;
+}
+
+.fullW {
+  width: 100%;
+}
+
+.noBO {
+    border: none;
+    outline: none;
+}
+
+.noMP {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.ant-menu-item {
+    width: 100% !important;
+}
+
+.ant-drawer-body {
+    padding: 0 !important;
+}

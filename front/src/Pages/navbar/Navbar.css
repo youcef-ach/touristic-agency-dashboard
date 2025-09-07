@@ -1,0 +1,100 @@
+.sider {
+  background-color: white;
+  padding-top: 36px;
+  position: relative;
+}
+
+.sider li span {
+  margin-left: 14px !important;
+}
+
+.logoTitle {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: black !important;
+  max-height: 29px;
+  overflow: hidden;
+}
+
+.logo {
+  height: 30px;
+  width: 30px;
+}
+
+.logoFlex {
+  padding-left: 20px;
+  margin-bottom: 28px;
+}
+
+.menuText {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: inherit;
+}
+
+.navMenu {
+  margin-top: 28px;
+  width: 220px;
+  margin: auto;
+}
+
+.ant-layout-sider-trigger {
+  background-color: white !important;
+  color: #7f7e83 !important;
+}
+
+.sider .ant-menu-item {
+    margin: 14px 0 !important;
+}
+
+.footerFlex {
+    height: 72px;
+    width: 100%;
+    padding: 16px 14px;
+    position: absolute;
+    bottom: 48px;
+    left: 0;
+    max-height: 72px;
+    overflow: hidden;
+}
+
+.footerFlex span {
+    width: 112px;
+}
+
+.user {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+}
+
+.subLogo {
+    height: 25px;
+    width: 25px;
+}
+
+.mobMenu {
+    width: 5%;
+}
+
+.header {
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px;
+    height: 62px;
+}
+
+.logoMtitle {
+    font-size: 1.25rem;
+}
+
+.drawer {
+    width: 900px;
+    height: 100%;
+}
+
+.menumText {
+    font-size: 1rem;
+}
