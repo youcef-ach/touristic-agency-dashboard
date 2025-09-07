@@ -1,9 +1,8 @@
 .standardHeader {
-  height: 67px;
   width: 100%;
   background: transparent;
   padding: 0;
-  margin-bottom: 10px;
+  height: fit-content;
 }
 
 .secondLayout {
@@ -11,15 +10,9 @@
   padding: 40px 32px;
 }
 
-.smallIcon {
-  height: 20px;
-  width: 20px;
-}
-
 .hello {
   font-weight: 600;
   font-size: 1.5rem;
-  margin-bottom: 10px;
 }
 
 .helloDesc {
@@ -29,14 +22,24 @@
 }
 
 .createButton {
-    width: 233px;
-    height: 44px;
+  width: 233px;
+  height: 44px;
 }
 
-@media (max-width: 769px) {
-    .helloFlex {
-        justify-content: center;
-        align-items: center;
-        row-gap: 10px;
-    }
+@media (max-width: 900px) {
+  .helloFlex {
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.helloFlex {
+  row-gap: 15px !important;
+  text-align: center;
+  overflow: hidden;
+  height: fit-content !important;
+}
+
+.helloSubFlex {
+  height: fit-content !important;
 }

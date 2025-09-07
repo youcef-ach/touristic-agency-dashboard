@@ -6,7 +6,7 @@ body {
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 #root {
@@ -27,19 +27,24 @@ body {
 }
 
 .noBO {
-    border: none;
-    outline: none;
+  border: none;
+  outline: none;
 }
 
 .noMP {
-    margin: 0 !important;
-    padding: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .ant-menu-item {
-    width: 100% !important;
+  width: 100% !important;
 }
 
 .ant-drawer-body {
-    padding: 0 !important;
+  padding: 0 !important;
+}
+
+.smallIcon {
+  height: 20px;
+  width: 20px;
 }
