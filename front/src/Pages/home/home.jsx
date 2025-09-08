@@ -1,4 +1,4 @@
-import { Layout, Typography, Button, Flex } from "antd";
+import { Layout} from "antd";
 import Navbar from "../navbar/Navbar";
 import { Outlet } from "react-router-dom";
 import MobileNav from "../navbar/MobileNav";
@@ -6,10 +6,7 @@ import { windowCtx } from "../../App";
 import { useContext } from "react";
 import { Content, Header } from "antd/es/layout/layout";
 import "./home.css";
-import plus from "../../assets/icons/plus.svg";
 import StandardHeader from "./standardHeader";
-
-const { Text } = Typography;
 
 function home() {
   const winWidth = useContext(windowCtx);
@@ -19,7 +16,7 @@ function home() {
       {winWidth > 900 ? <Navbar /> : <MobileNav />}
       <Layout className="fullHW secondLayout">
         <StandardHeader />
-        <Content className="fullHW">
+        <Content className="fullHW contentContainer">
           <Outlet />
         </Content>
       </Layout>

@@ -1,0 +1,74 @@
+.statCard {
+  width: 340px;
+}
+
+.cardTitle {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.chart {
+  height: 64px;
+  width: 128px;
+}
+
+.success {
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.vsmonth {
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.headNumber {
+  font-weight: 600;
+  font-size: 2.25rem;
+}
+
+.tripCard {
+  height: 316px;
+  width: 256px;
+  position: relative;
+}
+
+.tripTitle {
+  font-weight: 600;
+  font-size: 1.125rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.tripDesc {
+  font-weight: 400;
+  font-size: 0.875rem;
+}
+
+.tagsContainer {
+  margin-top: 20px;
+}
+
+.tripCard .ant-card-body {
+  padding: 18px !important;
+}
+
+.tripCard .ant-card-cover {
+  height: 180px;
+}
+
+.price {
+  position: absolute;
+  top: 16px;
+  left: 186px;
+  background-color: white;
+  border-radius: 100px;
+  padding: 4px 10px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.tripsHeader {
+  font-weight: 600;
+  font-size: 20px;
+}

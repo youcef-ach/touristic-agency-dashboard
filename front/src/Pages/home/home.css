@@ -24,6 +24,8 @@
 .createButton {
   width: 233px;
   height: 44px;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 @media (max-width: 900px) {
@@ -42,4 +44,8 @@
 
 .helloSubFlex {
   height: fit-content !important;
+}
+
+.contentContainer {
+  padding-top: 32px;
 }
