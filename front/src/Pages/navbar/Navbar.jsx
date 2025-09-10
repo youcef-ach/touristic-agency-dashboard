@@ -14,7 +14,7 @@ const menuItems = [
   {
     key: "1",
     label: (
-      <Link to="/">
+      <Link to="/dashboard">
         <Text className="menuText">Dashboard</Text>
       </Link>
     ),
@@ -23,7 +23,7 @@ const menuItems = [
   {
     key: "2",
     label: (
-      <Link to="/">
+      <Link to="/allUsers">
         <Text className="menuText">All users</Text>
       </Link>
     ),
@@ -32,7 +32,7 @@ const menuItems = [
   {
     key: "3",
     label: (
-      <Link to="/">
+      <Link to="/allTrips">
         <Text className="menuText">All trips</Text>
       </Link>
     ),
@@ -77,11 +77,7 @@ function Navbar() {
           },
         }}
       >
-        <Menu
-          defaultSelectedKeys={["1"]}
-          items={menuItems}
-          className="navMenu"
-        />
+        <Menu defaultSelectedKeys={[]} items={menuItems} className="navMenu" />
       </ConfigProvider>
       <Flex gap={14} className="footerFlex" justify="center" align="center">
         {!collapsed ? (

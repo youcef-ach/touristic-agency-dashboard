@@ -3,8 +3,9 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from users.views import createUserView
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.middleware.csrf import get_token
+
 
 @ensure_csrf_cookie
 def csrfView(request):
@@ -18,4 +19,5 @@ urlpatterns = [
     path("api/refresh/", TokenRefreshView.as_view()),
     path("users/register/", createUserView),
     path("csrf/", csrfView),
+    path("registerUser/", createUserView),
 ]

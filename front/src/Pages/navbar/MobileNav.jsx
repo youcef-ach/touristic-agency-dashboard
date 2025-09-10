@@ -27,7 +27,7 @@ function MobileNav() {
       {
         key: "1",
         label: (
-          <Link to="/" onClick={handleClose}>
+          <Link to="/dashboard" onClick={handleClose}>
             <Text className="menumText">Dashboard</Text>
           </Link>
         ),
@@ -36,7 +36,7 @@ function MobileNav() {
       {
         key: "2",
         label: (
-          <Link to="/" onClick={handleClose}>
+          <Link to="/allUsers" onClick={handleClose}>
             <Text className="menumText">All users</Text>
           </Link>
         ),
@@ -45,7 +45,7 @@ function MobileNav() {
       {
         key: "3",
         label: (
-          <Link to="/" onClick={handleClose}>
+          <Link to="/allTrips" onClick={handleClose}>
             <Text className="menumText">All trips</Text>
           </Link>
         ),
@@ -95,7 +95,7 @@ function MobileNav() {
           >
             <Menu
               className="fullW"
-              defaultSelectedKeys={["1"]}
+              defaultSelectedKeys={[]}
               items={menuItems}
             />
           </ConfigProvider>

@@ -5,12 +5,12 @@ body {
   height: 100vh;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 #root {
   height: 100%;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 .fullHW {
@@ -52,4 +52,9 @@ body {
 .vSmallIcon {
   height: 16px;
   width: 16px;
+}
+
+.mediumIcon {
+  height: 27px;
+  width: 27px;
 }
