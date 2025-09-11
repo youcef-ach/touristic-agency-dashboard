@@ -5,11 +5,16 @@ import { useNavigate } from "react-router-dom";
 const { Text, Title } = Typography;
 
 function tripCard({ trips }) {
+
   const navigate = useNavigate();
 
   const tripCards = trips.map((item) => (
     <Card
-      onClick={() => navigate("/tripDetails/" + item.id)}
+      onClick={() => {
+        console.log("clicked");
+        console.log(item);
+        navigate("/tripDetails/" + item.id);
+      }}
       hoverable
       key={item.id}
       className="tripCard"
@@ -44,8 +49,8 @@ function tripCard({ trips }) {
           </Tag>
         ))}
       </Flex>
-      <div className="price">
-        <Text>{item.estimatedPrice}</Text>
+      <div className="cardPrice">
+        <Text>{item.estimated_price}</Text>
       </div>
     </Card>
   ));

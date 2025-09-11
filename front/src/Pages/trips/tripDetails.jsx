@@ -11,6 +11,7 @@ const { Title, Text } = Typography;
 const tagColors = ["processing", "success", "warning", "magenta"];
 
 function tripDetails() {
+  
   const [data, setData] = useState(useLoaderData().details);
   const [popular, setPopular] = useState(useLoaderData().popularTrips.results);
 
