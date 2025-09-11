@@ -1,19 +1,22 @@
-import { useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useLocation } from "react-router-dom";
 import { Flex, List, Rate, Tag, Typography } from "antd";
 import "./tripDetails.css";
 import calendar from "../../assets/icons/calendar.svg";
 import location from "../../assets/icons/location-mark.svg";
 import TripCard from "../dashboard/tripCard";
+import { useEffect } from "react";
 
 const { Title, Text } = Typography;
 
 const tagColors = ["processing", "success", "warning", "magenta"];
 
 function tripDetails() {
-  
-  const [data, setData] = useState(useLoaderData().details);
-  const [popular, setPopular] = useState(useLoaderData().popularTrips.results);
+  const data = useLoaderData().details;
+  const popular = useLoaderData().popularTrips.results;
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <Flex

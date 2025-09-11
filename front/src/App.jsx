@@ -67,6 +67,7 @@ const myRouter = createBrowserRouter([
         path: "tripDetails/:id",
         Component: TripDetails,
         loader: async ({ params }) => {
+          console.log("details loader");
           const { id } = params;
           try {
             const res = await secureApi.get("trips/tripDetails/" + id);
