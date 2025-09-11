@@ -7,6 +7,7 @@ import { useState, useRef, useMemo } from "react";
 import users from "../../assets/icons/users.svg";
 import home from "../../assets/icons/home.svg";
 import logout from "../../assets/icons/logout.svg";
+import map from "../../assets/icons/itinerary.svg";
 import { Link } from "react-router-dom";
 import david from "../../assets/images/david.webp";
 
@@ -27,7 +28,7 @@ function MobileNav() {
       {
         key: "1",
         label: (
-          <Link to="/dashboard" onClick={handleClose}>
+          <Link to="/" onClick={handleClose}>
             <Text className="menumText">Dashboard</Text>
           </Link>
         ),
@@ -45,11 +46,11 @@ function MobileNav() {
       {
         key: "3",
         label: (
-          <Link to="/allTrips" onClick={handleClose}>
+          <Link to="/newTrip" onClick={handleClose}>
             <Text className="menumText">All trips</Text>
           </Link>
         ),
-        icon: <img src={users} />,
+        icon: <img src={map} />,
       },
     ],
     []

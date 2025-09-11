@@ -6,7 +6,7 @@ import downChart from "../../assets/icons/decrement.svg";
 
 const { Text } = Typography;
 
-function statCard({ title, number, perc, chart }) {
+function statCard({ title, number, perc, chart, styleIndex }) {
   return (
     <Card
       hoverable
@@ -14,7 +14,7 @@ function statCard({ title, number, perc, chart }) {
       title={<Text className="cardTitle">{title}</Text>}
     >
       <Flex justify="center" align="center" gap={16}>
-        <Flex vertical justify="center" align="center" gap={16}>
+        <Flex vertical justify="center" align="start" gap={16}>
           <Text className="headNumber">{number}</Text>
           <Flex justify="center" align="center" gap={8}>
             <img src={up} className="smallIcon" />

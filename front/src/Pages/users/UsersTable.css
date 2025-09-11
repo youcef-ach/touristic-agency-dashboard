@@ -1,0 +1,63 @@
+.ant-table-row {
+  height: 76px;
+}
+
+.ant-table-tbody .ant-table-row:nth-child(odd) {
+  background-color: rgba(249, 251, 252, 1);
+}
+
+.ant-table-tbody .ant-table-row:nth-child(even) {
+  background-color: white;
+}
+
+.ant-table-tbody .ant-table-cell {
+  font-weight: 400;
+  font-size: 0.875rem;
+}
+
+.ant-table-tbody .greenTag {
+  background-color: #ecfdf3;
+  color: #027a48;
+  border: none;
+  width: 70px;
+}
+
+.ant-table-tbody .blackTag {
+  background-color: #f2f4f7;
+  color: #344054;
+  border: none;
+  width: 70px;
+}
+
+.ant-table-tbody .name {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.ant-table-thead .ant-table-cell {
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: #7f7e83 !important;
+  background-color: white !important;
+}
+
+.ant-table-tbody .img {
+  height: 40px;
+  width: 40px;
+  border: 1px solid red;
+  border-radius: 20px;
+}
+
+.ant-table-tbody .delete {
+  cursor: pointer;
+  color: #2e2c48;
+  font-size: 24px;
+}
+
+.ant-table-tbody .delete:hover {
+  color: red;
+}
+
+.ant-table-wrapper {
+  min-width: 100px !important;
+}

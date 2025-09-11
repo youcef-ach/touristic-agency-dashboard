@@ -2,9 +2,28 @@ import { Button, Flex, Typography } from "antd";
 import { Header } from "antd/es/layout/layout";
 import "./home.css";
 import plus from "../../assets/icons/plus.svg";
-const {Text} = Typography
+import { authCtx } from "../../App";
+import { useContext } from "react";
+import { useLocation } from "react-router-dom";
+
+const { Text } = Typography;
 
 function standardHeader() {
+  const { logged } = useContext(authCtx);
+  const { pathname } = useLocation();
+
+  const data = [
+    [
+      "Welcome " + logged.name + "👋",
+      "Track activity, trends, and popular destinations in real time",
+    ],
+    ["Manage Users", "Filter, sort and access detailed user profiles"],
+    ["Add new Trips", "View and generate AI travel plans"],
+  ];
+
+  const currentData =
+    pathname == "/" ? data[0] : pathname == "/allUsers" ? data[1] : data[2];
+
   return (
     <Header className="standardHeader">
       <Flex
@@ -14,11 +33,9 @@ function standardHeader() {
         wrap
         gap={40}
       >
-        <Flex className="helloSubFlex" vertical justify="center" align="center">
-          <Text className="hello">Welcome Adrian👋</Text>
-          <Text className="helloDesc">
-            Track activity, trends, and popular destinations in real time
-          </Text>
+        <Flex className="helloSubFlex" vertical justify="center" align="start">
+          <Text className="hello">{currentData[0]}</Text>
+          <Text className="helloDesc">{currentData[1]}</Text>
         </Flex>
         <Button
           className="createButton"

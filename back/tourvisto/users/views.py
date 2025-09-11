@@ -3,6 +3,13 @@ from django.db import IntegrityError, DatabaseError
 from .forms import userCreationForm
 from django.views.decorators.csrf import csrf_exempt
 from django.forms import ValidationError
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import user
+from .serializers import UserSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
 
 
 @csrf_exempt
@@ -32,3 +39,20 @@ def createUserView(request):
         )
 
     return JsonResponse({"message": "success"}, status=201)
+
+
+class UserListPagination(PageNumberPagination):
+    page_size = 20
+    page_size_query_param = "page_size"
+    max_page_size = 100
+
+
+class UserListView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        users = user.objects.all().order_by("id")
+        paginator = UserListPagination()
+        result_page = paginator.paginate_queryset(users, request)
+        serializer = UserSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)

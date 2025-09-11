@@ -1,5 +1,9 @@
 .statCard {
-  width: 340px;
+  flex-basis: 30%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 344px;
+  max-width: 370px;
 }
 
 .cardTitle {
@@ -29,8 +33,12 @@
 
 .tripCard {
   height: 316px;
-  width: 256px;
   position: relative;
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 256px;
+  max-width: 347px;
 }
 
 .tripTitle {
@@ -60,7 +68,7 @@
 .price {
   position: absolute;
   top: 16px;
-  left: 186px;
+  right: 24px;
   background-color: white;
   border-radius: 100px;
   padding: 4px 10px;

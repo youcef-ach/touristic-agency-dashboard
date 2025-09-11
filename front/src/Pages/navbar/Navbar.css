@@ -98,3 +98,7 @@
 .menumText {
     font-size: 1rem;
 }
+
+.logOut {
+  cursor: pointer;
+}

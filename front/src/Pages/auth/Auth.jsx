@@ -1,33 +1,18 @@
-import axios from "axios";
-import { useContext, useRef, useState } from "react";
-import { windowCtx } from "../../App";
+import { useContext, useRef } from "react";
 import "./auth.css";
 import { Carousel, Form, Input, Button, Typography, Flex, message } from "antd";
 import logo from "../../assets/icons/logo.svg";
 import { api } from "../../api/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
+import { authCtx } from "../../App";
+import { isLoggedIn } from "../../api/isLoggedIn";
 
 const { Link, Title, Text } = Typography;
 
-// function getCookie(name) {
-//   var cookieValue = null;
-//   if (document.cookie && document.cookie !== "") {
-//     var cookies = document.cookie.split(";");
-//     for (var i = 0; i < cookies.length; i++) {
-//       var cookie = cookies[i].trim();
-//       if (cookie.substring(0, name.length + 1) === name + "=") {
-//         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-//         break;
-//       }
-//     }
-//   }
-//   return cookieValue;
-// }
-
 function Auth() {
   const carouselRef = useRef(null);
-  const redirect = useNavigate();
-  const { winWidth } = useContext(windowCtx);
+  const navigate = useNavigate();
+  const { logged, setLogged } = useContext(authCtx);
 
   const handleLogin = async (values) => {
     const body = {
@@ -39,8 +24,15 @@ function Auth() {
       if (res.data.access && res.data.refresh) {
         localStorage.setItem("access-token", res.data.access);
         localStorage.setItem("refresh-token", res.data.refresh);
+        const data = isLoggedIn();
+        setLogged({
+          logged: data.logged,
+          admin: data.admin,
+          name: data.name,
+          id: data.id,
+        });
         message.success("success");
-        redirect("/dashboard");
+        navigate("/");
       }
     } catch (err) {
       console.log(err);
@@ -56,124 +48,123 @@ function Auth() {
     try {
       const res = await api.post("registerUser/", body);
       if (res.data.message == "success") {
-        message.success("success");
+        // message.success("success");
       }
-      console.log(res.data);
     } catch (err) {
-      console.log(err);
-      message.error("error");
+      // message.error("error");
     }
   };
-
-  return (
-    <div className="authContainer">
-      <div className="carouselContainer">
-        <Carousel ref={carouselRef} className="myCarousel" infinite={false}>
-          <Form
-            layout="vertical"
-            className="myForm"
-            onFinish={handleLogin}
-            onFinishFailed={() => message.error("error")}
-          >
-            <Flex
-              justify="center"
-              align="center"
-              gap={6}
-              className="authHeader"
+  if (logged.logged) return <Navigate to="/" />;
+  else
+    return (
+      <div className="authContainer">
+        <div className="carouselContainer">
+          <Carousel ref={carouselRef} className="myCarousel" infinite={false}>
+            <Form
+              layout="vertical"
+              className="myForm"
+              onFinish={handleLogin}
+              onFinishFailed={() => message.error("error")}
             >
-              <img src={logo} className="mediumIcon" />
-              <Title level={1} className="noMP authTitle">
-                Tourvisto
+              <Flex
+                justify="center"
+                align="center"
+                gap={6}
+                className="authHeader"
+              >
+                <img src={logo} className="mediumIcon" />
+                <Title level={1} className="noMP authTitle">
+                  Tourvisto
+                </Title>
+              </Flex>
+              <Title level={2} className="authSubHeader">
+                Admin Dashboard Login
               </Title>
-            </Flex>
-            <Title level={2} className="authSubHeader">
-              Admin Dashboard Login
-            </Title>
-            <Text className="authDesc" type="secondary">
-              Sign in with Google to manage destinations, itineraries, and user
-              activity with ease
-            </Text>
-            <Form.Item
-              label="admin name"
-              name="1traveler_name"
-              rules={[{ required: true, message: "required message" }]}
+              <Text className="authDesc" type="secondary">
+                Sign in with Google to manage destinations, itineraries, and
+                user activity with ease
+              </Text>
+              <Form.Item
+                label="admin name"
+                name="1traveler_name"
+                rules={[{ required: true, message: "required message" }]}
+              >
+                <Input type="text" placeholder="admin name" />
+              </Form.Item>
+              <Form.Item
+                label="password"
+                name="1password"
+                rules={[{ required: true, message: "required message" }]}
+              >
+                <Input.Password placeholder="password" />
+              </Form.Item>
+              <Form.Item className="authSubmit">
+                <Button type="primary" block htmlType="submit">
+                  submit
+                </Button>
+              </Form.Item>
+              <Link href="#" onClick={() => carouselRef.current.next()}>
+                don t have an account? sign up for free
+              </Link>
+            </Form>
+            <Form
+              className="myForm"
+              layout="vertical"
+              onFinish={handleSignUp}
+              onFinishFailed={() => message.error("error")}
             >
-              <Input type="text" placeholder="admin name" />
-            </Form.Item>
-            <Form.Item
-              label="password"
-              name="1password"
-              rules={[{ required: true, message: "required message" }]}
-            >
-              <Input.Password placeholder="password" />
-            </Form.Item>
-            <Form.Item className="authSubmit">
-              <Button type="primary" block htmlType="submit">
-                submit
-              </Button>
-            </Form.Item>
-            <Link href="#" onClick={() => carouselRef.current.next()}>
-              don t have an account? sign up for free
-            </Link>
-          </Form>
-          <Form
-            className="myForm"
-            layout="vertical"
-            onFinish={handleSignUp}
-            onFinishFailed={() => message.error("error")}
-          >
-            <Flex
-              justify="center"
-              align="center"
-              gap={6}
-              className="authHeader"
-            >
-              <img src={logo} className="mediumIcon" />
-              <Title level={1} className="noMP authTitle">
-                Tourvisto
+              <Flex
+                justify="center"
+                align="center"
+                gap={6}
+                className="authHeader"
+              >
+                <img src={logo} className="mediumIcon" />
+                <Title level={1} className="noMP authTitle">
+                  Tourvisto
+                </Title>
+              </Flex>
+              <Title level={2} className="authSubHeader">
+                Admin Dashboard Login
               </Title>
-            </Flex>
-            <Title level={2} className="authSubHeader">
-              Admin Dashboard Login
-            </Title>
-            <Text className="authDesc" type="secondary">
-              Sign in with Google to manage destinations, itineraries, and user
-              activity with ease
-            </Text>
-            <Form.Item
-              label="admin name"
-              name="traveler_name"
-              rules={[{ required: true, message: "required message" }]}
-            >
-              <Input type="text" placeholder="admin name" />
-            </Form.Item>
-            <Form.Item
-              label="password"
-              name="password"
-              rules={[{ required: true, message: "required message" }]}
-            >
-              <Input.Password placeholder="password" />
-            </Form.Item>
-            <Form.Item
-              label="confirm password"
-              name="password2"
-              rules={[{ required: true, message: "required message" }]}
-            >
-              <Input.Password placeholder="password" />
-            </Form.Item>
-            <Form.Item className="authSubmit">
-              <Button type="primary" block htmlType="submit">
-                submit
-              </Button>
-            </Form.Item>
-            <Link href="#" onClick={() => carouselRef.current.prev()}>
-              already have an account? sign in
-            </Link>
-          </Form>
-        </Carousel>
+              <Text className="authDesc" type="secondary">
+                Sign in with Google to manage destinations, itineraries, and
+                user activity with ease
+              </Text>
+              <Form.Item
+                label="admin name"
+                name="traveler_name"
+                rules={[{ required: true, message: "required message" }]}
+              >
+                <Input type="text" placeholder="admin name" />
+              </Form.Item>
+              <Form.Item
+                label="password"
+                name="password"
+                rules={[{ required: true, message: "required message" }]}
+              >
+                <Input.Password placeholder="password" />
+              </Form.Item>
+              <Form.Item
+                label="confirm password"
+                name="password2"
+                rules={[{ required: true, message: "required message" }]}
+              >
+                <Input.Password placeholder="password" />
+              </Form.Item>
+              <Form.Item className="authSubmit">
+                <Button type="primary" block htmlType="submit">
+                  submit
+                </Button>
+              </Form.Item>
+              <Link href="#" onClick={() => carouselRef.current.prev()}>
+                already have an account? sign in
+              </Link>
+            </Form>
+          </Carousel>
+        </div>
       </div>
-    </div>
-  );
+    );
 }
 
 export default Auth;

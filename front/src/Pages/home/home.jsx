@@ -1,21 +1,19 @@
 import { Layout } from "antd";
 import Navbar from "../navbar/Navbar";
-import { Outlet, Navigate, useLoaderData } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import MobileNav from "../navbar/MobileNav";
 import { windowCtx } from "../../App";
-import { useContext } from "react";
+import { useContext, useEffect, useRef, useState, createContext } from "react";
 import { Content } from "antd/es/layout/layout";
 import "./home.css";
 import StandardHeader from "./standardHeader";
-import { isLoggedIn } from "../../api/isLoggedIn";
+import { authCtx } from "../../App.jsx";
 
 function home() {
-  
   const { winWidth } = useContext(windowCtx);
-  const loaderData = useLoaderData();
-  console.log(loaderData);
+  const { logged } = useContext(authCtx);
 
-  if (isLoggedIn())
+  if (logged.logged)
     return (
       <Layout className="fullHW">
         {winWidth > 900 ? <Navbar /> : <MobileNav />}

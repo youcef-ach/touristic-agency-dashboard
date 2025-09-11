@@ -6,15 +6,17 @@ import { Link } from "react-router-dom";
 import users from "../../assets/icons/users.svg";
 import home from "../../assets/icons/home.svg";
 import logout from "../../assets/icons/logout.svg";
-import { useRef, useState } from "react";
+import map from "../../assets/icons/itinerary.svg";
+import { useCallback, useContext, useRef, useState } from "react";
 const { Text, Title } = Typography;
 import david from "../../assets/images/david.webp";
+import { authCtx } from "../../App";
 
 const menuItems = [
   {
     key: "1",
     label: (
-      <Link to="/dashboard">
+      <Link to="/">
         <Text className="menuText">Dashboard</Text>
       </Link>
     ),
@@ -32,20 +34,28 @@ const menuItems = [
   {
     key: "3",
     label: (
-      <Link to="/allTrips">
-        <Text className="menuText">All trips</Text>
+      <Link to="/newTrip">
+        <Text className="menuText">AI trips</Text>
       </Link>
     ),
-    icon: <img src={users} />,
+    icon: <img src={map} />,
   },
 ];
 
 function Navbar() {
   const [collapsed, setCollapsed] = useState(false);
+  const { logged, setLogged } = useContext(authCtx);
+
+  const handleLogout = useCallback(() => {
+    console.log("clicked");
+    localStorage.removeItem("access-token");
+    localStorage.removeItem("refresh-token");
+    localStorage.removeItem("admin");
+    setLogged({});
+  }, []);
 
   const user = useRef({
-    name: "david",
-    email: "david@gmail.com",
+    name: logged.name,
     image: "../../assets/images/david.webp",
   });
 
@@ -90,7 +100,12 @@ function Navbar() {
             </Flex>
           </>
         ) : null}
-        <img className="icon" src={logout} />
+        <img
+          className="icon logOut"
+          src={logout}
+          title="logout"
+          onClick={handleLogout}
+        />
       </Flex>
     </Sider>
   );
