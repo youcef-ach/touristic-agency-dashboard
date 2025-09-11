@@ -1,44 +1,45 @@
 from django.http import JsonResponse
-from django.db import IntegrityError, DatabaseError
-from .forms import userCreationForm
 from django.views.decorators.csrf import csrf_exempt
-from django.forms import ValidationError
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from .models import user
 from .serializers import UserSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
+from .models import user
+import json
 
 
 @csrf_exempt
 def createUserView(request):
     if request.method != "POST":
-        return JsonResponse({"message": "GET not allowed"}, status=405)
-    form = userCreationForm(request.POST)
+        return JsonResponse({"error": "Only POST allowed"}, status=405)
+
     try:
-        if not form.is_valid():
+        data = json.loads(request.body)
+        traveler_name = data.get("traveler_name")
+        email = data.get("email")
+        password = data.get("password")
+
+        if not traveler_name or not password:
             return JsonResponse(
-                {"message": "Validation failed", "errors": form.errors}, status=400
+                {"error": "traveler_name and password required"}, status=400
             )
-        user = form.save(commit=False)
-        user.set_password(form.cleaned_data["password"])
-        user.save()
-    except ValidationError as e:
-        return JsonResponse(
-            {"message": "Validation error", "errors": e.message_dict}, status=400
-        )
-    except IntegrityError as e:
-        return JsonResponse({"message": "Integrity error", "error": str(e)}, status=400)
-    except DatabaseError as e:
-        return JsonResponse({"message": "Database error", "error": str(e)}, status=500)
-    except Exception as e:
-        return JsonResponse(
-            {"message": "Unexpected error", "error": str(e)}, status=500
+
+        myuser = user.objects.create_user(
+            traveler_name=traveler_name, email=email, password=password
         )
 
-    return JsonResponse({"message": "success"}, status=201)
+        return JsonResponse(
+            {
+                "message": "User created successfully",
+                "traveler_name": myuser.traveler_name,
+                "email": myuser.email,
+            },
+            status=201,
+        )
+
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
 
 
 class UserListPagination(PageNumberPagination):

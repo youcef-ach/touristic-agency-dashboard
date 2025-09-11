@@ -1,48 +1,47 @@
 from django.db import models
-from django.contrib.auth.models import (
-    AbstractBaseUser,
-    BaseUserManager,
-    PermissionsMixin,
-)
-from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth.validators import UnicodeUsernameValidator
 
 
-class myUserManager(BaseUserManager):
+class MyUserManager(BaseUserManager):
+    def create_user(self, traveler_name, email, password, profile_pic=None):
+        if not traveler_name:
+            raise ValueError("Users must have a traveler_name")
 
-    def create_user(self, traveler_name, password, profile_pic=None):
-        user = self.model(traveler_name=traveler_name, profile_pic=profile_pic)
-        user.set_password(password)
-        user.save()
+        email = self.normalize_email(email) if email else None
+        myuser = self.model(traveler_name=traveler_name, email=email, profile_pic=profile_pic)
+        myuser.set_password(password)  
+        myuser.save()
+        return myuser
 
-    def create_superuser(self, traveler_name, password, profile_pic=None):
-        user = self.model(traveler_name=traveler_name, profile_pic=profile_pic)
-        user.set_password(password)
-        user.is_superuser = True
-        user.is_staff = True
-        user.save()
+    def create_superuser(self, traveler_name, email=None, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
+
+        return self.create_user(traveler_name, email, password, **extra_fields)
 
 
 class user(AbstractBaseUser, PermissionsMixin):
-
-    traveler_name = models.TextField(
+    traveler_name = models.CharField(
         max_length=30,
         unique=True,
-        null=False,
-        blank=False,
-        default="a",
         validators=[UnicodeUsernameValidator()],
     )
-    profile_pic = models.ImageField(blank=True, null=True)
+    email = models.EmailField(unique=False, blank=True, null=True)  # ✅ email field
+    profile_pic = models.ImageField(upload_to="profile_pics/", blank=True, null=True)
     is_active = models.BooleanField(default=True)
-    is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    updated_at = models.DateTimeField(auto_now_add=True)
-    password = models.TextField(
-        max_length=30, null=False, blank=False, validators=[validate_password]
-    )
-    date_joined = models.DateTimeField(auto_now=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = "traveler_name"
+    REQUIRED_FIELDS = ["email"]  # ✅ Django requires this for createsuperuser
 
-    objects = myUserManager()
+    objects = MyUserManager()
+
+    def __str__(self):
+        return self.traveler_name

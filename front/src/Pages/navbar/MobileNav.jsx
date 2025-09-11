@@ -47,7 +47,16 @@ function MobileNav() {
         key: "3",
         label: (
           <Link to="/newTrip" onClick={handleClose}>
-            <Text className="menumText">All trips</Text>
+            <Text className="menumText">AI trips</Text>
+          </Link>
+        ),
+        icon: <img src={map} />,
+      },
+      {
+        key: "4",
+        label: (
+          <Link to="/allTrips" onClick={handleClose}>
+            <Text className="menumText">ALL Trips</Text>
           </Link>
         ),
         icon: <img src={map} />,

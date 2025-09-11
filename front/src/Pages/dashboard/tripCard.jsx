@@ -1,58 +1,25 @@
 import { Card, Typography, Flex, Tag } from "antd";
-import Sample1 from "../../assets/images/sample1.jpg";
-import Sample2 from "../../assets/images/sample2.jpg";
-import Sample3 from "../../assets/images/sample3.jpg";
-import Sample4 from "../../assets/images/sample4.jpg";
 import loc from "../../assets/icons/location-mark.svg";
+import { useNavigate } from "react-router-dom";
 
 const { Text, Title } = Typography;
 
-const allTrips = [
-  {
-    id: 1,
-    name: "Tropical Rewind",
-    imageUrls: Sample1,
-    itinerary: [{ location: "Thailand" }],
-    tags: ["Adventure", "Culture"],
-    travelStyle: "Solo",
-    estimatedPrice: "$1,000",
-  },
-  {
-    id: 2,
-    name: "French Reverie",
-    imageUrls: Sample2,
-    itinerary: [{ location: "Paris" }],
-    tags: ["Relaxation", "Culinary"],
-    travelStyle: "Family",
-    estimatedPrice: "$2,000",
-  },
-  {
-    id: 3,
-    name: "Zen Break",
-    imageUrls: Sample3,
-    itinerary: [{ location: "Japan" }],
-    tags: ["Shopping", "Luxury"],
-    travelStyle: "Couple",
-    estimatedPrice: "$3,000",
-  },
-  {
-    id: 4,
-    name: "Adventure in Westeros",
-    imageUrls: Sample4,
-    itinerary: [{ location: "Croatia" }],
-    tags: ["Historical", "Culture"],
-    travelStyle: "Friends",
-    estimatedPrice: "$4,000",
-  },
-];
+function tripCard({ trips }) {
+  const navigate = useNavigate();
 
-function tripCard() {
-  const tripCards = allTrips.map((item) => (
+  const tripCards = trips.map((item) => (
     <Card
+      onClick={() => navigate("/tripDetails/" + item.id)}
       hoverable
       key={item.id}
       className="tripCard"
-      cover={<img className="fullHW" src={item.imageUrls} />}
+      cover={
+        <img
+          className="fullHW"
+          src={item.images[0].image_url}
+          style={{ objectFit: "cover" }}
+        />
+      }
     >
       <Card.Meta
         title={<Text className="tripTitle">{item.name}</Text>}
@@ -71,7 +38,7 @@ function tripCard() {
         align="center"
         gap={6}
       >
-        {item.tags.map((item) => (
+        {item.interests.split(",").map((item) => (
           <Tag key={item} color="purple">
             {item}
           </Tag>

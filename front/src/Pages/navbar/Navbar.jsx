@@ -40,6 +40,15 @@ const menuItems = [
     ),
     icon: <img src={map} />,
   },
+  {
+    key: "4",
+    label: (
+      <Link to="/allTrips">
+        <Text className="menumText">ALL Trips</Text>
+      </Link>
+    ),
+    icon: <img src={map} />,
+  },
 ];
 
 function Navbar() {

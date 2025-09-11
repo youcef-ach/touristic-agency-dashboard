@@ -41,17 +41,16 @@ function Auth() {
   };
 
   const handleSignUp = async (values) => {
-    const body = new FormData();
-    body.append("traveler_name", values.traveler_name);
-    body.append("password", values.password);
-    body.append("password2", values.password2);
     try {
-      const res = await api.post("registerUser/", body);
+      const res = await api.post("registerUser/", {
+        ...values,
+        email: "contact@example.com",
+      });
       if (res.data.message == "success") {
-        // message.success("success");
+        message.success("success");
       }
     } catch (err) {
-      // message.error("error");
+      message.error("error");
     }
   };
   if (logged.logged) return <Navigate to="/" />;
@@ -148,7 +147,19 @@ function Auth() {
               <Form.Item
                 label="confirm password"
                 name="password2"
-                rules={[{ required: true, message: "required message" }]}
+                rules={[
+                  { required: true, message: "required message" },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue("password") === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error("The two passwords do not match!")
+                      );
+                    },
+                  }),
+                ]}
               >
                 <Input.Password placeholder="password" />
               </Form.Item>

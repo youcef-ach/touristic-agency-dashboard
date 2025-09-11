@@ -1,6 +1,11 @@
 @import "../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-layouts/styles/material.css";
 
+:root {
+  --primary-color: #1f1f36;
+  --secondary-color: #7f7e83;
+}
+
 body {
   height: 100vh;
 }

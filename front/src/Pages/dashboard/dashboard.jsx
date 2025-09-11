@@ -1,13 +1,15 @@
 import { Flex, Typography } from "antd";
 import StatCard from "./statCard";
 import TripCard from "./tripCard";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { authCtx } from "../../App";
+import { useLoaderData } from "react-router-dom";
 
 const { Text, Title } = Typography;
 
 function dashboard() {
   const { logged } = useContext(authCtx);
+  const [trips, setTrips] = useState(useLoaderData().results);
 
   if (logged.admin)
     return (
@@ -27,7 +29,7 @@ function dashboard() {
           Trips
         </Title>
         <Flex justify="center" align="center" gap={24} wrap className="fullW">
-          <TripCard />
+          <TripCard trips={trips} />
         </Flex>
       </Flex>
     );

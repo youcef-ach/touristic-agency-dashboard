@@ -1,4 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
+import { secureApi } from "../../api/api";
+import { isLoggedIn } from "../../api/isLoggedIn";
 
 const geminiKey = "AIzaSyBh6C3yoV_wTzm3NsWMUyAce8-mM768n54";
 const unsplashKey = "pK_LOCuw9jK82txknOE9jwZfjlyUv8c5lv2f8KylzKo";
@@ -56,11 +58,15 @@ export const action = async (values) => {
     ]
     }`;
 
-    // const response = await ai.models.generateContent({
-    //   model: "gemini-2.5-flash",
-    //   contents: prompt,
-    // });
-    // console.log(response.text);
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: prompt,
+    });
+    let textAiResponse = response.text;
+
+    textAiResponse = textAiResponse.replace(/```(json)?/g, "").trim();
+
+    const parsed = JSON.parse(textAiResponse);
 
     const imageResponse = await fetch(
       `https://api.unsplash.com/search/photos?query=${country} ${interests} ${Tstyle}&client_id=${unsplashKey}`
@@ -69,7 +75,31 @@ export const action = async (values) => {
     const imageUrls = (await imageResponse.json()).results
       .slice(0, 3)
       .map((item) => item.urls?.regular || null);
+
+    const payload = {
+      name: parsed.name,
+      description: parsed.description,
+      estimated_price: parsed.estimatedPrice,
+      duration: parsed.duration,
+      budget: parsed.budget,
+      travel_style: parsed.travelStyle,
+      country: parsed.country,
+      interests: parsed.interests,
+      group_type: parsed.groupType,
+      best_time_to_visit: parsed.bestTimeToVisit,
+      weather_info: parsed.weatherInfo,
+      location: parsed.location,
+      itinerary: parsed.itinerary,
+      images: imageUrls.map((url) => ({ image_url: url })),
+      user: isLoggedIn().id,
+    };
+
+    const djangoResponse = await secureApi.post("trips/create/", payload, {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    return djangoResponse;
   } catch (err) {
-    console.log("error while generating: ", err);
+    throw err;
   }
 };

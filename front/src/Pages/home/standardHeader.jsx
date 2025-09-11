@@ -5,12 +5,14 @@ import plus from "../../assets/icons/plus.svg";
 import { authCtx } from "../../App";
 import { useContext } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
 
 function standardHeader() {
   const { logged } = useContext(authCtx);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const data = [
     [
@@ -41,6 +43,7 @@ function standardHeader() {
           className="createButton"
           type="primary"
           icon={<img src={plus} className="smallIcon" />}
+          onClick={() => navigate("/newTrip")}
         >
           Create a trip
         </Button>

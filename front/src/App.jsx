@@ -7,7 +7,8 @@ import { isLoggedIn } from "./api/isLoggedIn.js";
 import { secureApi } from "./api/api.js";
 import UsersTable from "./Pages/users/UsersTable.jsx";
 import NewTrip from "./Pages/newTrip/newTrip.jsx";
-// import CreateNewTrip from "./Pages/newTrip/CreateNewTrip.js";
+import TripDetails from "./Pages/trips/tripDetails.jsx";
+import AllTrips from "./Pages/trips/AllTrips.jsx";
 
 export const windowCtx = createContext();
 export const authCtx = createContext();
@@ -31,6 +32,15 @@ const myRouter = createBrowserRouter([
       {
         path: "",
         Component: Dashboard,
+        loader: async ({ params }) => {
+          const { id } = params;
+          try {
+            const res = await secureApi.get("trips/all/?page_size=10&page=1");
+            return res.data;
+          } catch (err) {
+            console.log(err);
+          }
+        },
       },
       {
         path: "allUsers/",
@@ -41,10 +51,32 @@ const myRouter = createBrowserRouter([
         path: "newTrip/",
         Component: NewTrip,
       },
-      // {
-      //   path: "api/createNewTrip",
-      //   Component: CreateNewTrip,
-      // },
+      {
+        path: "allTrips/",
+        Component: AllTrips,
+        loader: async ({ request }) => {
+          try {
+            const res = await secureApi.get("trips/all/?page_size=4&page=1");
+            return { trips: res.data.results, count: res.data.count };
+          } catch (err) {
+            console.log(err);
+          }
+        },
+      },
+      {
+        path: "tripDetails/:id",
+        Component: TripDetails,
+        loader: async ({ params }) => {
+          const { id } = params;
+          try {
+            const res = await secureApi.get("trips/tripDetails/" + id);
+            const res2 = await secureApi.get("trips/all/?page_size=4&page=1");
+            return { details: res.data, popularTrips: res2.data };
+          } catch (err) {
+            console.log(err);
+          }
+        },
+      },
     ],
   },
   {

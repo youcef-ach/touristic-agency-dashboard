@@ -10,6 +10,7 @@ import {
 import "./newTrip.css";
 import ai from "../../assets/icons/magic-star.svg";
 import { action } from "./CreateNewTrip";
+import { useState } from "react";
 
 const { RangePicker } = DatePicker;
 
@@ -45,10 +46,21 @@ const interests = [
 ];
 
 function newTrip() {
+  const [loading, setLoading] = useState(false);
+
   return (
     <Flex justify="center" className="fullHW">
       <Form
-        onFinish={(values) => action(values)}
+        onFinish={async (values) => {
+          setLoading(true);
+          try {
+            await action(values);
+            message.success("created successfully");
+          } catch (err) {
+            message.error("try again");
+          }
+          setLoading(false);
+        }}
         className="newTform"
         layout="vertical"
         labelCol={{ span: 24 }}
@@ -59,8 +71,11 @@ function newTrip() {
           label="countries"
           rules={[{ required: true, message: "required" }]}
         >
-          <Select showSearch placeholder="pick coutries" options={countries}>
-          </Select>
+          <Select
+            showSearch
+            placeholder="pick coutries"
+            options={countries}
+          ></Select>
         </Form.Item>
         <Form.Item
           name="Duration"
@@ -121,6 +136,7 @@ function newTrip() {
             htmlType="submit"
             icon={<img src={ai} className="aiIcon" />}
             style={{ height: 48 }}
+            loading={loading}
           >
             Generate a trip
           </Button>
