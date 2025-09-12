@@ -1,13 +1,15 @@
-import { Layout } from "antd";
+import { Layout, Typography } from "antd";
 import Navbar from "../navbar/Navbar";
 import { Outlet, Navigate } from "react-router-dom";
 import MobileNav from "../navbar/MobileNav";
 import { windowCtx } from "../../App";
-import { useContext, useEffect, useRef, useState, createContext } from "react";
+import { useContext } from "react";
 import { Content } from "antd/es/layout/layout";
 import "./home.css";
 import StandardHeader from "./standardHeader";
 import { authCtx } from "../../App.jsx";
+
+const { Title } = Typography;
 
 function home() {
   const { winWidth } = useContext(windowCtx);
@@ -20,7 +22,13 @@ function home() {
         <Layout className="fullHW secondLayout">
           <StandardHeader />
           <Content className="fullHW contentContainer">
-            <Outlet />
+            {logged.admin ? (
+              <Outlet />
+            ) : (
+              <Title level={2} type="danger">
+                Only admins can acceess
+              </Title>
+            )}
           </Content>
         </Layout>
       </Layout>

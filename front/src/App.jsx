@@ -87,6 +87,7 @@ const myRouter = createBrowserRouter([
 ]);
 
 function App() {
+
   const [winWidth, setWinWidth] = useState(window.innerWidth);
   const [logged, setLogged] = useState(isLoggedIn());
 

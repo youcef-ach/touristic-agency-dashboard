@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 const { Text } = Typography;
 
 function standardHeader() {
+
   const { logged } = useContext(authCtx);
   const { pathname } = useLocation();
   const navigate = useNavigate();
