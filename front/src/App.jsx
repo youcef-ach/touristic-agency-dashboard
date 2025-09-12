@@ -32,8 +32,7 @@ const myRouter = createBrowserRouter([
       {
         path: "",
         Component: Dashboard,
-        loader: async ({ params }) => {
-          const { id } = params;
+        loader: async () => {
           try {
             const res = await secureApi.get("trips/all/?page_size=10&page=1");
             return res.data;
@@ -67,7 +66,6 @@ const myRouter = createBrowserRouter([
         path: "tripDetails/:id",
         Component: TripDetails,
         loader: async ({ params }) => {
-          console.log("details loader");
           const { id } = params;
           try {
             const res = await secureApi.get("trips/tripDetails/" + id);
@@ -87,7 +85,6 @@ const myRouter = createBrowserRouter([
 ]);
 
 function App() {
-
   const [winWidth, setWinWidth] = useState(window.innerWidth);
   const [logged, setLogged] = useState(isLoggedIn());
 
