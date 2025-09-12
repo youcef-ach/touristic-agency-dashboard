@@ -25,6 +25,7 @@ const countries = [
   { label: "Japan", value: "Japan" },
   { label: "China", value: "China" },
   { label: "Brazil", value: "Brazil" },
+  { label: "algeria", value: "algeria" },
 ];
 
 const groupTypes = [
