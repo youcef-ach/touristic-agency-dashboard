@@ -2,8 +2,8 @@ import { GoogleGenAI } from "@google/genai";
 import { secureApi } from "../../api/api";
 import { isLoggedIn } from "../../api/isLoggedIn";
 
-const geminiKey = "AIzaSyBh6C3yoV_wTzm3NsWMUyAce8-mM768n54";
-const unsplashKey = "pK_LOCuw9jK82txknOE9jwZfjlyUv8c5lv2f8KylzKo";
+const geminiKey = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyBh6C3yoV_wTzm3NsWMUyAce8-mM768n54";
+const unsplashKey = import.meta.env.VITE_UNSPLASH_ACCESS_KEY || "pK_LOCuw9jK82txknOE9jwZfjlyUv8c5lv2f8KylzKo";
 
 export const action = async (values) => {
   const { country, Duration, Gtype, Tstyle, budget, interests } = values;

@@ -4,12 +4,12 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 
 
 class MyUserManager(BaseUserManager):
-    def create_user(self, traveler_name, email, password, profile_pic=None):
+    def create_user(self, traveler_name, email=None, password=None, profile_pic=None, **extra_fields):
         if not traveler_name:
             raise ValueError("Users must have a traveler_name")
 
         email = self.normalize_email(email) if email else None
-        myuser = self.model(traveler_name=traveler_name, email=email, profile_pic=profile_pic)
+        myuser = self.model(traveler_name=traveler_name, email=email, profile_pic=profile_pic, **extra_fields)
         myuser.set_password(password)  
         myuser.save()
         return myuser
