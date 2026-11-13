@@ -8,6 +8,7 @@ dist/
 build/
 local_settings.py
 *.sqlite3-journal
+*.sqlite3
 
 # Environments
 .env

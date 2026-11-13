@@ -2,11 +2,11 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
 export const api = axios.create({
-  baseURL: "http://localhost:8000/",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/",
 });
 
 export const secureApi = axios.create({
-  baseURL: "http://localhost:8000/",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/",
 });
 
 const authInterceptor = async (config) => {

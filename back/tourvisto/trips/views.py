@@ -4,6 +4,33 @@ from rest_framework import status, permissions, generics
 from .serializers import TripSerializer
 from .models import Trip
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.throttling import ScopedRateThrottle
+from .generation import GenerationRequest, ProviderUnavailable, generate_itinerary, destination_images
+
+
+class TripGenerateView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "trip_generation"
+
+    def post(self, request):
+        preferences = GenerationRequest(data=request.data)
+        preferences.is_valid(raise_exception=True)
+        values = preferences.validated_data
+        try:
+            payload = generate_itinerary(values)
+        except ProviderUnavailable as error:
+            return Response({"detail": str(error)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        payload.update(duration=values["Duration"], country=values["country"],
+                       budget=values["budget"], travel_style=values["Tstyle"],
+                       interests=values["interests"], group_type=values["Gtype"],
+                       images=destination_images(values["country"]))
+        serializer = TripSerializer(data=payload)
+        if not serializer.is_valid():
+            return Response({"detail": "The generated itinerary could not be validated. Try again."},
+                            status=status.HTTP_502_BAD_GATEWAY)
+        trip = serializer.save(user=request.user)
+        return Response(TripSerializer(trip).data, status=status.HTTP_201_CREATED)
 
 
 class TripPagination(PageNumberPagination):

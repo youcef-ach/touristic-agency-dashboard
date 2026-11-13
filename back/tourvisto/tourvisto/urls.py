@@ -10,7 +10,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path
 from users.views import UserListView
-from trips.views import TripCreateView, TripDetailView, TripListCreateView
+from trips.views import TripCreateView, TripDetailView, TripListCreateView, TripGenerateView
 
 
 @ensure_csrf_cookie
@@ -27,6 +27,7 @@ urlpatterns = [
     path("csrf/", csrfView),
     path("registerUser/", createUserView),
     path("trips/create/", TripCreateView.as_view(), name="trip-create"),
+    path("trips/generate/", TripGenerateView.as_view(), name="trip-generate"),
     path("trips/all/", TripListCreateView.as_view(), name="trip-create"),
     path("trips/tripDetails/<int:id>", TripDetailView.as_view(), name="trip-create"),
 ]

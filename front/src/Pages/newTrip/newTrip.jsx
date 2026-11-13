@@ -58,7 +58,7 @@ function newTrip() {
             await action(values);
             message.success("created successfully");
           } catch (err) {
-            message.error("try again");
+            message.error(err.response?.data?.detail || "Could not create the itinerary. Check your preferences and try again.");
           }
           setLoading(false);
         }}
@@ -69,12 +69,12 @@ function newTrip() {
       >
         <Form.Item
           name="country"
-          label="countries"
+          label="Destination"
           rules={[{ required: true, message: "required" }]}
         >
           <Select
             showSearch
-            placeholder="pick coutries"
+            placeholder="Choose a country"
             options={countries}
           ></Select>
         </Form.Item>
@@ -85,7 +85,7 @@ function newTrip() {
         >
           <InputNumber
             className="input"
-            max={100}
+            max={21}
             min={1}
             suffix="days"
             controls

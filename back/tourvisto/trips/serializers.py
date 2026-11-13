@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Trip, ItineraryDay, Activity, TripImage
+from django.db import transaction
 
 
 class ActivitySerializer(serializers.ModelSerializer):
@@ -46,6 +47,7 @@ class TripSerializer(serializers.ModelSerializer):
             "images",
         ]
 
+    @transaction.atomic
     def create(self, validated_data):
         itinerary_data = validated_data.pop("itinerary", [])
         images_data = validated_data.pop("images", [])
